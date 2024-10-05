@@ -7,7 +7,7 @@ interface AuthState {
   nullifierHash: string | null;
 }
 
-export function useAuth(checkInterval = 60000) { // Check every minute by default
+export function useAuth(checkInterval = 60000) {
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
     verificationLevel: null,
@@ -45,12 +45,30 @@ export function useAuth(checkInterval = 60000) { // Check every minute by defaul
     }
   };
 
-  useEffect(() => {
-    checkAuth(); // Check immediately when the component mounts
-    const intervalId = setInterval(checkAuth, checkInterval);
+  const logout = async () => {
+    try {
+      const response = await fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+      if (response.ok) {
+        setAuthState({
+          isAuthenticated: false,
+          verificationLevel: null,
+          nullifierHash: null
+        });
+        router.push('/login'); // Redirect to login page after logout
+      }
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
+  useEffect(() => {
+    checkAuth();
+    const intervalId = setInterval(checkAuth, checkInterval);
     return () => clearInterval(intervalId);
   }, [checkInterval]);
 
-  return { ...authState, isLoading, refreshAuth: checkAuth };
+  return { ...authState, isLoading, refreshAuth: checkAuth, logout };
 }

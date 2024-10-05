@@ -9,9 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
-		fontFamily:{
-			"main" :["var(--font-oakes)"]
-		},
+  		fontFamily: {
+  			'main': ["var(--font-oakes)"]
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -66,15 +66,28 @@ const config: Config = {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-      keyframes: {
-        bounce: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        }
-      },
-      animation: {
-        bounce: 'bounce 0.6s ease infinite',
-      }
+  		keyframes: {
+  			bounce: {
+  				'0%, 100%': {
+  					transform: 'translateY(0)'
+  				},
+  				'50%': {
+  					transform: 'translateY(-10px)'
+  				}
+  			},
+  			grid: {
+  				'0%': {
+  					transform: 'translateY(-50%)'
+  				},
+  				'100%': {
+  					transform: 'translateY(0)'
+  				}
+  			}
+  		},
+  		animation: {
+  			bounce: 'bounce 0.6s ease infinite',
+  			grid: 'grid 15s linear infinite'
+  		}
   	}
   },
   variants: {
