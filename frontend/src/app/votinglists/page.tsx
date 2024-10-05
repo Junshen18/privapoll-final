@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Plus } from 'lucide-react';
+import { ArrowLeft, Plus, Filter } from 'lucide-react';
 import FlickeringGrid from '@/components/ui/flickering-grid';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
@@ -28,6 +28,8 @@ export default function DisplayVotingTopics(): JSX.Element {
   const [topics, setTopics] = useState<VotingTopic[]>([]);
   const [votes, setVotes] = useState<VoteState>({});
   const [selectedTopic, setSelectedTopic] = useState<VotingTopic | null>(null);
+  const [filterOption, setFilterOption] = useState('showAll');
+  const [filteredTopics, setFilteredTopics] = useState(topics);
   const authority = 0; //1 for orb, 0 for device 
 
   useEffect(() => {
@@ -110,7 +112,7 @@ export default function DisplayVotingTopics(): JSX.Element {
 
         setHasVoted(prevState => ({
           ...prevState,
-          [topicId]: true, 
+          [topicId]: true,
         }));
 
         alert("Vote successfully submitted!");
@@ -137,6 +139,23 @@ export default function DisplayVotingTopics(): JSX.Element {
     };
   };
 
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterOption(event.target.value);
+  };
+
+  const applyFilter = () => {
+    if (filterOption === 'showAll') {
+      setFilteredTopics(topics); // Reset to show all topics if 'showAll' is selected
+    } else if (filterOption === 'accessible') {
+      const newFilteredTopics = topics.filter(topic => topic.votingTarget === false);
+      setFilteredTopics(newFilteredTopics); // Show only votable topics
+    }         
+  };
+
+  useEffect(() => {
+    applyFilter();
+  }, [filterOption, topics]);
+
   return (
     <div className="min-h-screen bg-background text-white p-6 justify-center items-center flex flex-col w-screen">
       <FlickeringGrid
@@ -159,88 +178,143 @@ export default function DisplayVotingTopics(): JSX.Element {
             Create New Topic
           </a>
         </div>
-        <h1 className="text-3xl font-bold mb-4">Voting Topics</h1>
+        <div className='flex justify-between items-center mb-4'>
+          <h1 className="text-3xl font-bold ">Voting Topics</h1>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button 
+                className="px-4 py-2 text-white rounded-lg hover:bg-gray-500"
+                onClick={applyFilter}
+              >
+                <Filter />
+              </button>
+            </DialogTrigger>
+
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Filter Options</DialogTitle>
+              </DialogHeader>
+              <div className="mt-4">
+                <form>
+                  <div className="mb-4">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="filter"
+                        value="showAll"
+                        checked={filterOption === 'showAll'}
+                        onChange={handleRadioChange}
+                        className="mr-2"
+                      />
+                      Show All
+                    </label>
+                  </div>
+                  <div className="mb-4">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="filter"
+                        value="accessible"
+                        checked={filterOption === 'accessible'}
+                        onChange={handleRadioChange}
+                        className="mr-2"
+                      />
+                      Show Votable by Medium Humanity
+                    </label>
+                  </div>
+                </form>
+              </div>
+              <DialogClose asChild>
+                <button className="px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600">
+                  Filter
+                </button>
+              </DialogClose>
+            </DialogContent>
+          </Dialog>
+        </div>
 
         {topics.length === 0 ? (
           <p className="text-gray-400">No voting topics available. Create a new one to get started!</p>
         ) : (
           <div className="space-y-6">
-            {topics.map((topic) => {
-              const ratio = calculateRatio(topic.id);
-              const totalParticipants = Object.values(votes[topic.id]).reduce((sum, count) => sum + count, 0);
-              return (
-                <Dialog key={topic.id}>
-                  <DialogTrigger asChild>
-                    <div
-                      className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700 transition-colors"
-                      onClick={() => setSelectedTopic(topic)}
-                    >
-                      <h2 className="text-xl font-semibold mb-2">{topic.title}</h2>
-                      <p className="text-gray-400 mb-4">{topic.description}</p>
+            {filteredTopics.map((topic) => {
+                const ratio = calculateRatio(topic.id);
+                const totalParticipants = Object.values(votes[topic.id]).reduce((sum, count) => sum + count, 0);
+                return (
+                  <Dialog key={topic.id}>
+                    <DialogTrigger asChild>
+                      <div
+                        className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700 transition-colors"
+                        onClick={() => setSelectedTopic(topic)}
+                      >
+                        <h2 className="text-xl font-semibold mb-2">{topic.title}</h2>
+                        <p className="text-gray-400 mb-4">{topic.description}</p>
 
-                      {!topic.isPublic && (
-                        <div className="mb-4 text-yellow-400 font-semibold">
-                          Private Voting Topic
+                        {!topic.isPublic && (
+                          <div className="mb-4 text-yellow-400 font-semibold">
+                            Private Voting Topic
+                          </div>
+                        )}
+                        <Progress
+                          value={(((votes[topic.id]['Yes'] || 0) ?? 0) / (totalParticipants ?? 1)) * 100}
+                          className={totalParticipants > 0 ? '' : 'bg-gray-300'}
+                        />
+                        <div className="flex justify-between mt-4">
+                          <span className="text-green-400">Yes: {ratio.yes}%</span>
+                          <span className="text-red-400">No: {ratio.no}%</span>
                         </div>
-                      )}
-                      <Progress
-                        value={(((votes[topic.id]['Yes'] || 0) ?? 0) / (totalParticipants ?? 1)) * 100}
-                        className={totalParticipants > 0 ? '' : 'bg-gray-300'}
-                      />
-                      <div className="flex justify-between mt-4">
-                        <span className="text-green-400">Yes: {ratio.yes}%</span>
-                        <span className="text-red-400">No: {ratio.no}%</span>
                       </div>
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent>
-                    {authority >= (topic.votingTarget? 1 : 0) ?
-                      (
-                        <div>
-                          <DialogHeader>
-                            <DialogTitle>{topic.title}</DialogTitle>
-                          </DialogHeader>
-                          <div className="mt-4">
-                            <p className="text-gray-400 mb-4">{topic.description}</p>
-                            <div className="flex flex-wrap gap-2">
-                              {topic.options.map((option, index) => (
-                                <DialogClose>
-                                  <button
-                                    key={index}
-                                    onClick={() => handleVote(topic.id, option)}
-                                    className="px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600"
-                                  >
-                                    {option}
-                                  </button>
-                                </DialogClose>
-                              ))}
+                    </DialogTrigger>
+                    <DialogContent>
+                      {authority >= (topic.votingTarget ? 1 : 0) ?
+                        (
+                          <div>
+                            <DialogHeader>
+                              <DialogTitle>{topic.title}</DialogTitle>
+                            </DialogHeader>
+                            <div className="mt-4">
+                              <p className="text-gray-400 mb-4">{topic.description}</p>
+                              <div className="flex flex-wrap gap-2">
+                                {topic.options.map((option, index) => (
+                                  <DialogClose>
+                                    <button
+                                      key={index}
+                                      onClick={() => handleVote(topic.id, option)}
+                                      className="px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600"
+                                    >
+                                      {option}
+                                    </button>
+                                  </DialogClose>
+                                ))}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ) : (
-                        <div>
-                          <DialogHeader>
-                            <DialogTitle>No Access</DialogTitle>
-                          </DialogHeader>
-                          <div className="mt-4">
-                            <p className="text-gray-400 mb-4">
-                              You have no access to this voting, please verify your identity at the World Orb
-                            </p>
-                            <DialogClose>
-                              <button className="px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600">
-                                OK
-                              </button>
-                            </DialogClose>
-                            <div className="flex flex-wrap gap-2">
+                        ) : (
+                          <div>
+                            <DialogHeader>
+                              <DialogTitle>No Access</DialogTitle>
+                            </DialogHeader>
+                            <div className="mt-4">
+                              <p className="text-gray-400 mb-4">
+                                You have no access to this voting, please verify your identity at the World Orb
+                              </p>
+                              <DialogClose>
+                                <button 
+                                  className="px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600"
+                                >
+                                  OK
+                                </button>
+                              </DialogClose>
+                              <div className="flex flex-wrap gap-2">
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )
-                    }
-                  </DialogContent>
-                </Dialog>
-              );
-            })}
+                        )
+                      }
+                    </DialogContent>
+                  </Dialog>
+                );
+              })}
           </div>
         )}
       </div>
