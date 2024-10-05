@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowLeft, Plus, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import FlickeringGrid from '@/components/ui/flickering-grid';
 import { ethers } from "ethers";
 import VotingABI from '../contracts/ABI.json'
+import { useAuth } from '@/hooks/useAuth';
 
 const contractAddress = '0xd2B784D565a4a59f8456251621484F656c2Ef0ef';
 
@@ -16,6 +17,27 @@ export default function CreateVotingTopic() {
   const [isPublic, setIsPublic] = useState(true);
   const [votingTarget, setVotingTarget] = useState(true);
   const router = useRouter();
+  const { isAuthenticated, isLoading } = useAuth();
+  
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
 
   const handleAddOption = () => {
     setOptions([...options, '']);
