@@ -5,15 +5,32 @@ import { faRectangleList, faScaleBalanced, faSquarePollVertical, faUser } from '
 import FlickeringGrid from "@/components/ui/flickering-grid";
 import { useRouter } from "next/navigation";
 import Navbar from '@/components/navbar';
+import { useEffect } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Home() {
 
+  
   const router = useRouter();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (isAuthenticated) {
+        // User is logged in, stay on the page
+      } else {
+        router.push('/welcome');
+      }
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
     <div className="w-full h-screen relative  bg-background overflow-hidden">
-      <Navbar/>
       <FlickeringGrid
         className="z-0 absolute inset-0 size-full"
         squareSize={4}

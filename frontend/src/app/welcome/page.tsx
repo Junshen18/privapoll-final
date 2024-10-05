@@ -1,8 +1,18 @@
+"use client"
 import React from 'react';
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useRouter } from 'next/navigation';
 
 const LandingPage = () => {
+
+  const router = useRouter();
+
+  //loginRoute function will route to /login
+  const loginRoute = () => {
+    router.push('/login');
+  };
+
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 to-black text-white">
       
@@ -14,7 +24,7 @@ const LandingPage = () => {
           <p className="text-3xl font-main tracking-tighter w-1/2">
             Utilising World ID Solution and MACI Framework to ensure fairness and integrity in online voting.
           </p>
-            <Button className='px-16 py-8 font-bold font-main bg-gradient-to-r from-blue-900 to-blue-700 text-white border-white border-2 hover:brightness-110 transition'>TRY NOW</Button>
+            <button className='px-16 py-8 font-bold font-main bg-gradient-to-r from-blue-900 to-blue-700 text-white border-white border-2 hover:brightness-110 transition' onClick={() => loginRoute()}>TRY NOW</button>
           </div>
         </section>
 

@@ -1,19 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+import { useAuth } from '@/hooks/useAuth';
 import Image from 'next/image';
 import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit'
 
 export default function Login() {
+  const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const [verification, setVerification] = useState<"device" | "orb">("device");
+
+  
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, isLoading, router]);
+
   const onSuccess = (result: ISuccessResult) => {
     console.log("Success:", result);
-    setUserId(result.proof); //set user id
+    setUserId(result.nullifier_hash); //set user id
     console.log("user id:",userId);
   };
   const handleVerify = async (proof: ISuccessResult) => {
@@ -29,6 +39,7 @@ export default function Login() {
     }
     const data = await res.json();
     setVerification(data.verified ? "device" : "orb");
+    router.push('/');
 };
 
   return (
