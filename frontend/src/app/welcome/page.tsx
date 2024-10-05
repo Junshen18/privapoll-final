@@ -17,7 +17,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-900 to-black text-white">
       
       <main className="container mx-auto">
-        <section className="pt-16 pb-24 flex flex-col mb-12 border-b-2 border-white h-[80vh]">
+        <section className="pt-32 pb-24 flex flex-col mb-12 border-b-2 border-white h-[80vh]">
           <h2 className="text-8xl mb-4 font-main font-lighttracking-wide leading-tight">The <br /> <span className='italic bg-gradient-to-r from-blue-800 to-blue-400 px-8 py-4'>Decentralised</span> <br />Voting Platform</h2>
           
           <div className="flex items-center justify-end mb-24">

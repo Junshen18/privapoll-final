@@ -6,9 +6,6 @@ import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { ethers } from "ethers";
 import VotingABI from '../contracts/ABI.json'
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/useAuth';
 
 const contractAddress = '0xd2B784D565a4a59f8456251621484F656c2Ef0ef';
 
@@ -31,22 +28,8 @@ export default function DisplayVotingTopics(): JSX.Element {
   const [topics, setTopics] = useState<VotingTopic[]>([]);
   const [votes, setVotes] = useState<VoteState>({});
   const [selectedTopic, setSelectedTopic] = useState<VotingTopic | null>(null);
-  const authority = 1; //1 for orb, 0 for device 
+  const authority = 0; //1 for orb, 0 for device 
 
-  const { isAuthenticated, isLoading } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, isLoading, router]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  
   useEffect(() => {
     const storedTopics = JSON.parse(localStorage.getItem('votingTopics') || '[]') as VotingTopic[];
     setTopics(storedTopics);

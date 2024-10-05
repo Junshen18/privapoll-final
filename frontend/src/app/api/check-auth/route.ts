@@ -9,7 +9,11 @@ export async function GET() {
     try {
       const { verification_level, nullifier_hash } = JSON.parse(authToken.value);
       if (verification_level && nullifier_hash) {
-        return NextResponse.json({ authenticated: true });
+        return NextResponse.json({
+          authenticated: true,
+          verification_level,
+          nullifier_hash
+        });
       }
     } catch (error) {
       console.error('Error parsing auth token:', error);
