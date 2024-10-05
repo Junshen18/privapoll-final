@@ -28,7 +28,7 @@ export default function DisplayVotingTopics(): JSX.Element {
   const [topics, setTopics] = useState<VotingTopic[]>([]);
   const [votes, setVotes] = useState<VoteState>({});
   const [selectedTopic, setSelectedTopic] = useState<VotingTopic | null>(null);
-  const authority = 0; //1 for orb, 0 for device 
+  const authority = 1; //1 for orb, 0 for device 
 
   useEffect(() => {
     const storedTopics = JSON.parse(localStorage.getItem('votingTopics') || '[]') as VotingTopic[];

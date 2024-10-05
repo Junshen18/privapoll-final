@@ -9,9 +9,12 @@ import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit
 export default function Login() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [verification, setVerification] = useState<"device" | "orb">("device");
   const onSuccess = (result: ISuccessResult) => {
     console.log("Success:", result);
+    setUserId(result.proof); //set user id
+    console.log("user id:",userId);
   };
   const handleVerify = async (proof: ISuccessResult) => {
     const res = await fetch("/api/verify", { // route to your backend will depend on implementation
