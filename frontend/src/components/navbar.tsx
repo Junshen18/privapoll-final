@@ -8,7 +8,7 @@ const Navbar = () => {
     const humanityLevel = "Medium";
     const router = useRouter();
   return (
-    <nav className="z-10 px-5 top-0 w-full h-[100px] flex justify-between items-center bg-gradient-to-br from-blue-900 to-black border-b-4 border-black">
+    <nav className="z-10 px-5 top-0 w-full h-[100px] flex justify-between items-center absolute bg-black bg-opacity-55">
         <div className='cursor-pointer' onClick={()=>{
           router.push('/welcome')
         }}>

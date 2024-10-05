@@ -31,6 +31,7 @@ export default function Home() {
   return (
     <>
     <div className="w-full h-screen relative  bg-background overflow-hidden">
+
       <FlickeringGrid
         className="z-0 absolute inset-0 size-full"
         squareSize={4}
