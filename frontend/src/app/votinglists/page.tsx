@@ -5,6 +5,7 @@ import FlickeringGrid from '@/components/ui/flickering-grid';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { ethers } from "ethers";
+import { useAuth } from '@/hooks/useAuth';
 import VotingABI from '../contracts/ABI.json'
 
 const contractAddress = '0xd2B784D565a4a59f8456251621484F656c2Ef0ef';
@@ -63,7 +64,8 @@ export default function DisplayVotingTopics(): JSX.Element {
   const [selectedTopic, setSelectedTopic] = useState<VotingTopic | null>(null);
   const [filterOption, setFilterOption] = useState('showAll');
   const [filteredTopics, setFilteredTopics] = useState(topics);
-  const authority = 0; //1 for orb, 0 for device 
+  const { verificationLevel } = useAuth(30000);
+  const authority = verificationLevel == "orb" ? 1: 0; //1 for orb, 0 for device 
 
   useEffect(() => {
     // Initialize with fake data if localStorage is empty
