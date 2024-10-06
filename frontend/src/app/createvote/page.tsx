@@ -9,12 +9,18 @@ import { useAuth } from '@/hooks/useAuth';
 
 const contractAddress = '0xd2B784D565a4a59f8456251621484F656c2Ef0ef';
 
-declare global {
-    interface Window {
-        ethereum: any;
-    }
+interface EthereumProvider {
+  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+  on: (eventName: string, callback: (...args: any[]) => void) => void;
+  removeListener: (eventName: string, callback: (...args: any[]) => void) => void;
+  // Add other properties and methods as needed
 }
 
+declare global {
+  interface Window {
+    ethereum?: EthereumProvider;
+  }
+}
 export default function CreateVotingTopic() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

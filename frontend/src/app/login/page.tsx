@@ -10,9 +10,9 @@ import RetroGrid from '@/components/ui/retro-grid';
 export default function Login() {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-    
+
   const [userId, setUserId] = useState<string | null>(null);
-  const [verification, setVerification] = useState<"device" | "orb">("device");
+
 
   
 
@@ -39,7 +39,7 @@ export default function Login() {
         throw new Error("Verification failed."); // IDKit will display the error message to the user in the modal
     }
     const data = await res.json();
-    setVerification(data.verified ? "device" : "orb");
+
     router.push('/');
 };
 

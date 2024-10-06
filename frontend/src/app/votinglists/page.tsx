@@ -61,7 +61,6 @@ const fakeVotes = {
 export default function DisplayVotingTopics(): JSX.Element {
   const [topics, setTopics] = useState<VotingTopic[]>([]);
   const [votes, setVotes] = useState<VoteState>({});
-  const [selectedTopic, setSelectedTopic] = useState<VotingTopic | null>(null);
   const [filterOption, setFilterOption] = useState('showAll');
   const [filteredTopics, setFilteredTopics] = useState(topics);
   const { verificationLevel } = useAuth(30000);
@@ -97,32 +96,32 @@ export default function DisplayVotingTopics(): JSX.Element {
 
   const [hasVoted, setHasVoted] = useState<{ [topicId: number]: boolean }>({}); // Track voting status
 
-  const fetchVotes = async (storedTopics: VotingTopic[]) => {
-    if (window.ethereum) {
-      try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        const contract = new ethers.Contract(contractAddress, VotingABI, signer);
+  // const fetchVotes = async (storedTopics: VotingTopic[]) => {
+  //   if (window.ethereum) {
+  //     try {
+  //       const provider = new ethers.BrowserProvider(window.ethereum);
+  //       const signer = await provider.getSigner();
+  //       const contract = new ethers.Contract(contractAddress, VotingABI, signer);
 
-        // Loop through each topic and get votes for each option
-        for (const topic of storedTopics) {
-          const topicVotes: { [option: string]: number } = {};
-          for (const option of topic.options) {
-            const voteCount = await contract.getVotes(topic.id, option);
-            topicVotes[option] = voteCount.toNumber(); // Convert BigNumber to number
-          }
-          setVotes(prevVotes => ({
-            ...prevVotes,
-            [topic.id]: topicVotes // Update votes state
-          }));
-        }
-      } catch (error) {
-        console.error("Error fetching votes:", error);
-      }
-    } else {
-      alert('Please install MetaMask.');
-    }
-  };
+  //       // Loop through each topic and get votes for each option
+  //       for (const topic of storedTopics) {
+  //         const topicVotes: { [option: string]: number } = {};
+  //         for (const option of topic.options) {
+  //           const voteCount = await contract.getVotes(topic.id, option);
+  //           topicVotes[option] = voteCount.toNumber(); // Convert BigNumber to number
+  //         }
+  //         setVotes(prevVotes => ({
+  //           ...prevVotes,
+  //           [topic.id]: topicVotes // Update votes state
+  //         }));
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching votes:", error);
+  //     }
+  //   } else {
+  //     alert('Please install MetaMask.');
+  //   }
+  // };
 
   const handleVote = async (topicId: number, option: string) => {
     if (hasVoted[topicId]) {
@@ -292,7 +291,7 @@ export default function DisplayVotingTopics(): JSX.Element {
                     <DialogTrigger asChild>
                       <div
                         className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700 transition-colors"
-                        onClick={() => setSelectedTopic(topic)}
+                        onClick={() => {}}
                       >
                         <h2 className="text-xl font-semibold mb-2">{topic.title}</h2>
                         <p className="text-gray-400 mb-4">{topic.description}</p>

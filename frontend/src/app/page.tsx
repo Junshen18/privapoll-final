@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRectangleList, faSquarePollVertical } from '@fortawesome/free-solid-svg-icons'
 import FlickeringGrid from "@/components/ui/flickering-grid";
 import { useRouter } from "next/navigation";
-import Navbar from '@/components/navbar';
 import { useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 

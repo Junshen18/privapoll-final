@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
+
 
 import styles from '../../styles/index';
 import Image from "next/image";
@@ -144,7 +144,7 @@ const LandingPage = () => {
                                 className='flex-[0.75] flex justify-center flex-col'
                             >
                                 <p className="font-normal text-[14px] text-secondary-white text-center">Upcoming Features</p>
-                                <p className="font-normal text-[14px] text-secondary-white text-center">What's New</p>
+                                <p className="font-normal text-[14px] text-secondary-white text-center">What&apos;s New</p>
                                 <div className='mt-[48px] flex flex-wrap justify-between gap-[24px]'>
                                     {newFeatures.map((feature, index) => (
                                         <div className='flex-1 flex flex-col sm:max-w-[250px] min-w-[210px]'>
@@ -287,7 +287,7 @@ const LandingPage = () => {
                                     All rights reserved.
                                 </p>
                                 <div className='flex gap-4'>
-                                    {socials.map((social, index) => (
+                                    {socials.map((social) => (
                                         <a href={social.website} target='_blank'>
                                             <Image
                                                 key={social.name}
