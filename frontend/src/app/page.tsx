@@ -1,7 +1,7 @@
 "use client"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRectangleList, faScaleBalanced, faSquarePollVertical, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faRectangleList, faSquarePollVertical } from '@fortawesome/free-solid-svg-icons'
 import FlickeringGrid from "@/components/ui/flickering-grid";
 import { useRouter } from "next/navigation";
 import Navbar from '@/components/navbar';
@@ -70,16 +70,6 @@ export default function Home() {
           </div>
           <FontAwesomeIcon icon={faRectangleList} className="text-5xl group-hover:animate-bounce" />
         </div>
-        {/* <div className="z-[1] group cursor-pointer my-3 mx-5 w-72 h-96 text-2xl border border-white bg-black bg-opacity-55 rounded-xl flex flex-col gap-5 justify-center items-center shadow-lg shadow-neutral-500 transition-all hover:shadow-neutral-300 hover:-translate-y-1"
-        onClick={()=>{
-          router.push('/votinglists');
-        }}
-        >
-          <div className="font-bold">
-            Voting Rules
-          </div>
-          <FontAwesomeIcon icon={faScaleBalanced} className="text-5xl group-hover:animate-bounce" />
-        </div> */}
       </div>
     </div>
     </>
