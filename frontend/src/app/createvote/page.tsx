@@ -18,7 +18,8 @@ export default function CreateVotingTopic() {
   const [votingTarget, setVotingTarget] = useState(true);
   const router = useRouter();
   const { isAuthenticated, isLoading } = useAuth();
-  
+  const [yesVotesCount, setYesVotesCount] = useState(0);
+  const [noVotesCount, setNoVotesCount] = useState(0);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -58,18 +59,32 @@ export default function CreateVotingTopic() {
     e.preventDefault();
 
     const filteredOptions = options.filter(opt => opt.trim() !== '');
-    const topic = {
-      id: Date.now(),
+    const newTopic = {
+      id: Date.now(), // Generate a new ID
       title,
       description,
-      options: options.filter(opt => opt.trim() !== ''),
+      options: filteredOptions,
       deadline,
       isPublic,
-      votingTarget
+      votingTarget,
     };
 
+    // Get existing topics and votes from localStorage
     const existingTopics = JSON.parse(localStorage.getItem('votingTopics') || '[]');
-    localStorage.setItem('votingTopics', JSON.stringify([...existingTopics, topic]));
+    const existingVotes = JSON.parse(localStorage.getItem('votingVotes') || '{}');
+
+    // Initialize votes for the new topic
+    const newVotes = {
+      ...existingVotes,
+      [newTopic.id]: filteredOptions.reduce((acc, option) => {
+        acc[option] = 0;
+        return acc;
+      }, {} as { [key: string]: number })
+    };
+
+    // Update localStorage
+    localStorage.setItem('votingTopics', JSON.stringify([...existingTopics, newTopic]));
+    localStorage.setItem('votingVotes', JSON.stringify(newVotes));
 
     if (window.ethereum) {
         try {
@@ -95,6 +110,7 @@ export default function CreateVotingTopic() {
     } else {
         alert('Please install MetaMask.');
     }
+  router.push('/votinglists')
 };
 
 

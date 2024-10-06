@@ -24,6 +24,39 @@ interface VoteState {
   };
 }
 
+const fakeTopics = [
+  {
+    id: 1,
+    title: "Should we allow pets in the office?",
+    description: "A discussion on whether pets should be allowed in the workplace.",
+    options: ["Yes", "No"],
+    votingTarget: false,
+    isPublic: true,
+  },
+  {
+    id: 2,
+    title: "Which team-building activity do you prefer?",
+    description: "Vote for your preferred team-building activity.",
+    options: ["Yes", "No"],
+    votingTarget: false,
+    isPublic: true,
+  },
+  {
+    id: 3,
+    title: "What should be the theme for our next party?",
+    description: "Choose the theme for our upcoming company party.",
+    options: ["Yes", "No"],
+    votingTarget: true,
+    isPublic: true,
+  },
+];
+
+const fakeVotes = {
+  1: { Yes: 3, No: 2 },
+  2: { Yes: 5, No: 0 },
+  3: { Yes: 1, No: 4 },
+};
+
 export default function DisplayVotingTopics(): JSX.Element {
   const [topics, setTopics] = useState<VotingTopic[]>([]);
   const [votes, setVotes] = useState<VoteState>({});
@@ -33,21 +66,30 @@ export default function DisplayVotingTopics(): JSX.Element {
   const authority = 0; //1 for orb, 0 for device 
 
   useEffect(() => {
-    const storedTopics = JSON.parse(localStorage.getItem('votingTopics') || '[]') as VotingTopic[];
-    setTopics(storedTopics);
+    // Initialize with fake data if localStorage is empty
+    const storedTopics = localStorage.getItem('votingTopics');
+    const storedVotes = localStorage.getItem('votingVotes');
 
-    // Initialize votes state
-    const initialVotes: VoteState = {};
-    storedTopics.forEach(topic => {
-      initialVotes[topic.id] = topic.options.reduce((acc, option) => {
-        acc[option] = 0; // Start with 0 votes for each option
-        return acc;
-      }, {} as { [option: string]: number });
-    });
+    let initialTopics;
+    let initialVotes;
+    
+    if (!storedTopics) {
+      initialTopics = fakeTopics;
+      localStorage.setItem('votingTopics', JSON.stringify(fakeTopics));
+    } else {
+      initialTopics = JSON.parse(storedTopics);
+    }
+    
+    if (!storedVotes) {
+      initialVotes = fakeVotes;
+      localStorage.setItem('votingVotes', JSON.stringify(fakeVotes));
+    } else {
+      initialVotes = JSON.parse(storedVotes);
+    }
+
+    setTopics(initialTopics);
     setVotes(initialVotes);
-
-    // Fetch votes from the smart contract
-    fetchVotes(storedTopics);
+    setFilteredTopics(initialTopics);
   }, []);
 
 
@@ -126,13 +168,14 @@ export default function DisplayVotingTopics(): JSX.Element {
   };
 
   const calculateRatio = (topicId: number) => {
-    const topicVotes = votes[topicId];
-    const totalVotes = Object.values(topicVotes).reduce((sum, count) => sum + count, 0);
+    const topicVotes = votes[topicId] || {};
+    const totalVotes = Object.values(topicVotes).reduce((sum, count) => sum + (count || 0), 0);
+    
     if (totalVotes === 0) return { yes: 0, no: 0 };
-
+  
     const yesVotes = topicVotes['Yes'] || 0;
     const noVotes = topicVotes['No'] || 0;
-
+  
     return {
       yes: Math.round((yesVotes / totalVotes) * 100),
       no: Math.round((noVotes / totalVotes) * 100)
