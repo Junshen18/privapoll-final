@@ -263,6 +263,14 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </section>
+                <section  className={`${styles.paddings} relative z-10 pt-52 pb-10`}>
+                    <p className="font-normal text-[28px] text-secondary-white text-center mt-24 mb-20">About Us</p>
+                    <div className="w-full flex items-center justify-center">
+                        <video width="1000" height="8460" controls>
+                            <source src="/ad_vid.mp4" type="video/mp4"></source>
+                        </video>
+                    </div>
+                </section>
 
                 <footer
                     className={`${styles.paddings} py-8 relative`}
