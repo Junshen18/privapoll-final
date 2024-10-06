@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 
 import styles from '../../styles/index';
 import Image from "next/image";
+import GridPattern from '@/components/ui/grid-pattern';
+import { cn } from '@/lib/utils';
+
 
 const startingFeatures = [
     'Scan your Worldcoin wallet with the given QR code.',
@@ -42,20 +45,40 @@ const LandingPage = () => {
 
     return (
         <div className="px-20">
+          <GridPattern
+                  squares={[
+                    [4, 4],
+                    [5, 1],
+                    [8, 2],
+                    [5, 3],
+                    [5, 5],
+                    [10, 10],
+                    [12, 15],
+                    [15, 10],
+                    [10, 15],
+                    [15, 10],
+                    [10, 15],
+                    [15, 10],
+                  ]}
+                  className={cn(
+                    "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
+                    "inset-x-0 inset-y-[-55%] h-[200%] skew-y-12",
+                  )}
+                />
             <div className='bg-primary-black overflow-hidden'>
-                <section className={`${styles.yPaddings}`}>
-                    <div className={`${styles.innerWidth} mx-auto flex flex-col my-20`}>
-                        <div className="py-20 flex justify-center items-center flex-col relative z-10">
-                            <h1 className={styles.heroHeading}>Privapoll</h1>
+                <section className=" py-5 mt-40 ">
+                    <div className={` mx-auto flex flex-col my-10`}>
+                        <div className="py-10 flex justify-center items-center flex-col relative z-10">
+                            <h1 className="font-bold  md:text-[130px] sm:text-[60px] text-[90px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white">Privapoll</h1>
                             <div className='flex flex-row justify-center items-center'>
-                                <h1 className={styles.heroHeading}>Voting System</h1>
+                                <h1 className="font-bold md:text-[130px] sm:text-[60px] text-[90px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white">Voting System</h1>
                             </div>
                         </div>
                     </div>
                 </section>
-
+                
                 <div className='relative'>
-                    <section className={`${styles.paddings} relative z-10`}>
+                    <section className={`relative z-10`}>
                         <div className='gradient-02 z-0' />
                         <div className={`${styles.innerWidth} mx-auto ${styles.flexCenter} flex-col`}>
                             <p className="mt-24 font-normal text-[14px] text-secondary-white text-center">About Privapoll</p>
@@ -255,7 +278,7 @@ const LandingPage = () => {
                         <div className='flex flex-col'>
                             <div className='mb-[50px] h-[2px] bg-white opacity-10' />
                             <div className='flex items-center justify-between flex-wrap gap-4'>
-                                <a href='https://github.com/renyanng/ethkl_privapoll'>
+                                <a href='https://github.com/Junshen18/privapoll-final'>
                                     <Image src="/privapoll.svg" alt="privapoll" width="100" height="50" />
                                 </a>
                                 <p className='font-normal text-[14px] text-white opacity-50'>
