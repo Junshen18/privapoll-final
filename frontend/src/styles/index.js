@@ -13,7 +13,7 @@ const styles = {
   flexEnd: 'flex justify-end',
   navPadding: 'pt-[98px]',
 
-  heroHeading: 'font-bold lg:text-[200px] md:text-[100px] sm:text-[60px] text-[90px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white',
+  heroHeading: 'font-bold lg:text-[400px] md:text-[200px] sm:text-[60px] text-[90px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white',
 };
 
 export default styles;

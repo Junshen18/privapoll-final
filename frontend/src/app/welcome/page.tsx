@@ -43,7 +43,7 @@ const LandingPage = () => {
     return (
         <div className="px-20">
             <div className='bg-primary-black overflow-hidden'>
-                <section className={`${styles.yPaddings} sm:pl-16 pl-6`}>
+                <section className={`${styles.yPaddings}`}>
                     <div className={`${styles.innerWidth} mx-auto flex flex-col my-20`}>
                         <div className="py-20 flex justify-center items-center flex-col relative z-10">
                             <h1 className={styles.heroHeading}>Privapoll</h1>
@@ -58,10 +58,10 @@ const LandingPage = () => {
                     <section className={`${styles.paddings} relative z-10`}>
                         <div className='gradient-02 z-0' />
                         <div className={`${styles.innerWidth} mx-auto ${styles.flexCenter} flex-col`}>
-                            <p className="font-normal text-[14px] text-secondary-white text-center">About Privapoll</p>
+                            <p className="mt-24 font-normal text-[14px] text-secondary-white text-center">About Privapoll</p>
 
                             <p
-                                className='mt-[8px] font-normal sm:text-[32px] text-[20px] text-center text-secondary-white'
+                                className='mt-[8px] font-normal sm:text-[32px] text-[20px] text-center mx-20 text-secondary-white'
                             >
                                 Utilizing the
                                 <span className='font-extrabold text-white'> MACI </span>
@@ -154,7 +154,7 @@ const LandingPage = () => {
                     <div
                         className={`${styles.innerWidth} mx-auto flex flex-col`}
                     >
-                        <p className="font-normal text-[14px] text-secondary-white text-center mt-20">Make it Safer</p>
+                        <p className="font-normal text-[14px] text-secondary-white text-center mt-24">Make it Safer</p>
                         <p className="font-normal text-[14px] text-secondary-white text-center">With a better Governance System</p>
 
                         <div
@@ -247,7 +247,7 @@ const LandingPage = () => {
                     <div className='footer-gradient'/>
 
                     <div className={`${styles.innerWidth} mx-auto flex flex-col gap-8`}>
-                        <div className='flex items-center justify-between flex-wrap gap-5'>
+                        <div className='mt-24 flex items-center justify-between flex-wrap gap-5'>
                             <h4 className='font-bold md:text-[36px] text-[16px] text-white'>
                                 The future needs you.
                             </h4>
