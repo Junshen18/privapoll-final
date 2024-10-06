@@ -38,8 +38,8 @@ const Navbar = () => {
                                 <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                     <button
                                         onClick={()=>{
-                                          logout;
-                                          router.push("/login");
+                                          logout()
+                                          router.push('/login')                                          
                                         }}
                                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 w-full text-left"
                                         role="menuitem"
