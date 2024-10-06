@@ -10,7 +10,7 @@ import RetroGrid from '@/components/ui/retro-grid';
 export default function Login() {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+    
   const [userId, setUserId] = useState<string | null>(null);
   const [verification, setVerification] = useState<"device" | "orb">("device");
 

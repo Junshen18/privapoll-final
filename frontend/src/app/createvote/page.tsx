@@ -9,6 +9,12 @@ import { useAuth } from '@/hooks/useAuth';
 
 const contractAddress = '0xd2B784D565a4a59f8456251621484F656c2Ef0ef';
 
+declare global {
+    interface Window {
+        ethereum: any;
+    }
+}
+
 export default function CreateVotingTopic() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -18,8 +24,7 @@ export default function CreateVotingTopic() {
   const [votingTarget, setVotingTarget] = useState(true);
   const router = useRouter();
   const { isAuthenticated, isLoading } = useAuth();
-  const [yesVotesCount, setYesVotesCount] = useState(0);
-  const [noVotesCount, setNoVotesCount] = useState(0);
+
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {

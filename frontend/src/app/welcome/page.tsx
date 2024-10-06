@@ -36,12 +36,6 @@ const socials = [
 
 
 const LandingPage = () => {
-    const router = useRouter();
-
-    //loginRoute function will route to /login
-    const loginRoute = () => {
-        router.push('/login');
-    };
 
     return (
         <div className="px-20">
