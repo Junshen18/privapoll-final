@@ -282,8 +282,10 @@ export default function DisplayVotingTopics(): JSX.Element {
           <div className="space-y-6">
             {filteredTopics.map((topic) => {
                 const ratio = calculateRatio(topic.id);
-                const totalParticipants = Object.values(votes[topic.id]).reduce((sum, count) => sum + count, 0);
-                return (
+              const totalParticipants = votes && votes[topic.id]
+                  ? Object.values(votes[topic.id]).reduce((sum, count) => sum + count, 0)
+                  : 0;
+              return (
                   <Dialog key={topic.id}>
                     <DialogTrigger asChild>
                       <div
@@ -299,7 +301,7 @@ export default function DisplayVotingTopics(): JSX.Element {
                           </div>
                         )}
                         <Progress
-                          value={(((votes[topic.id]['Yes'] || 0) ?? 0) / (totalParticipants ?? 1)) * 100}
+                          value={(((votes[topic.id]?.['Yes'] || 0) ?? 0) / (totalParticipants ?? 1)) * 100}
                           className={totalParticipants > 0 ? '' : 'bg-gray-300'}
                         />
                         <div className="flex justify-between mt-4">
