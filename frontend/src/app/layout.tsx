@@ -91,7 +91,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        <link rel="icon" href="/privapoll.svg" />
+        <link rel="icon" href="/github.png" type="image/png" />
       </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${oakesGrotesk.variable} antialiased`}

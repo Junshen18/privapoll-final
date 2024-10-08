@@ -63,9 +63,9 @@ const LandingPage = () => {
                 <section className=" py-5 mt-40 ">
                     <div className={` mx-auto flex flex-col my-10`}>
                         <div className="py-10 flex justify-center items-center flex-col relative z-10">
-                            <h1 className="font-bold  md:text-[130px] sm:text-[60px] text-[90px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white">Privapoll</h1>
+                            <h1 className="font-bold lg:text-[130px] md:text-[110px] sm:text-[60px]  lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white text-center text-5xl">Privapoll</h1>
                             <div className='flex flex-row justify-center items-center'>
-                                <h1 className="font-bold md:text-[130px] sm:text-[60px] text-[90px] lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white">Voting System</h1>
+                                <h1 className="font-bold lg:text-[130px] md:text-[110px] sm:text-[60px]  lg:leading-[158.4px] md:leading-[114.4px] sm:leading-[74.4px] leading-[64.4px] uppercase text-white text-center text-5xl">Voting System</h1>
                             </div>
                         </div>
                     </div>
