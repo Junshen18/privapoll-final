@@ -198,7 +198,7 @@ export default function DisplayVotingTopics(): JSX.Element {
 
   useEffect(() => {
     applyFilter();
-  }, [filterOption, topics]);
+  }, [filterOption, topics, applyFilter]);
 
   return (
     <div className="min-h-screen bg-background text-white p-6 justify-center items-center flex flex-col w-screen">
