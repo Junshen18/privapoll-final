@@ -122,7 +122,7 @@ const LandingPage = () => {
                                 <p>Get started with just few steps</p>
                                 <div className='mt-[31px] flex flex-col max-w-[370px] gap-[24px]'>
                                     {startingFeatures.map((feature, index) => (
-                                        <div className={`${styles.flexCenter} flex-row`}>
+                                        <div key="index" className={`${styles.flexCenter} flex-row`}>
                                             <div className={`${styles.flexCenter} w-[70px] h-[70px] rounded-[24px] bg-[#323f5d]`}>
                                                 <p className='font-bold text-[20px] text-white'>0{index + 1}</p>
                                             </div>

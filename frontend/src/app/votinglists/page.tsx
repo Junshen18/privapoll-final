@@ -322,9 +322,8 @@ export default function DisplayVotingTopics(): JSX.Element {
                               <p className="text-gray-400 mb-4">{topic.description}</p>
                               <div className="flex flex-wrap gap-2">
                                 {topic.options.map((option, index) => (
-                                  <DialogClose>
+                                  <DialogClose key={index}>
                                     <button
-                                      key={index}
                                       onClick={() => handleVote(topic.id, option)}
                                       className="px-4 py-2 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600"
                                     >
