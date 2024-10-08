@@ -9,7 +9,6 @@ import { useAuth } from '@/hooks/useAuth';
 
 export default function Home() {
 
-  
   const router = useRouter();
   const { isAuthenticated, isLoading } = useAuth();
 
