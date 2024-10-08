@@ -281,13 +281,13 @@ export default function DisplayVotingTopics(): JSX.Element {
           <p className="text-gray-400">No voting topics available. Create a new one to get started!</p>
         ) : (
           <div className="space-y-6">
-            {filteredTopics.map((topic) => {
+            {filteredTopics.map((topic, index) => {
                 const ratio = calculateRatio(topic.id);
               const totalParticipants = votes && votes[topic.id]
                   ? Object.values(votes[topic.id]).reduce((sum, count) => sum + count, 0)
                   : 0;
               return (
-                  <Dialog key={topic.id}>
+                  <Dialog key={index}>
                     <DialogTrigger asChild>
                       <div
                         className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700 transition-colors"

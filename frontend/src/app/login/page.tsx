@@ -38,7 +38,6 @@ export default function Login() {
     if (!res.ok) {
         throw new Error("Verification failed."); // IDKit will display the error message to the user in the modal
     }
-    const data = await res.json();
 
     router.push('/');
 };
