@@ -26,7 +26,7 @@ const Navbar = () => {
                             onClick={() => setDropdownOpen(!dropdownOpen)}
                             className='bg-black px-3 py-2 rounded-full flex items-center'
                         >
-                            <div className='rounded-full w-[60px] h-[60px] bg-[url("/profile-pic.jpeg")] bg-cover mr-3' />
+                            <div className='rounded-full w-[60px] h-[60px] bg-[url("/profile-pic.png")] bg-cover mr-3' />
                             <div className='flex flex-col mr-2'>
                                 <span className="font-semibold text-lg text-white truncate w-[150px]">{nullifierHash}</span>
                                 <span className='font-light text-base text-white'>Humanity level: {verificationLevel}</span>
